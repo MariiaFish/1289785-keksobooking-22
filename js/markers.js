@@ -26,10 +26,10 @@ const mainPinMarker = L.marker(
 );
 
 //Функция для передачи адреса метки в поле ввода
-const getMarkerAdres = (marker, element) => {
+const getMarkerAdres = (marker, element, decimalPlaces) => {
   marker.on('moveend', (evt) => {
     const coordinates = evt.target.getLatLng();
-    element.value = `${coordinates.lat.toFixed(5)} ${coordinates.lng.toFixed(5)}`;
+    element.value = `${coordinates.lat.toFixed(decimalPlaces)} ${coordinates.lng.toFixed(decimalPlaces)}`;
   });
 };
 
