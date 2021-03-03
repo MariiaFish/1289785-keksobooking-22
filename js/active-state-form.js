@@ -1,8 +1,8 @@
 // Функция для отмены режимов "неактивно";
-const removeDisabled = (arr) => {
-  arr.forEach((arrElement) => {
-    arrElement.classList.remove('ad-form--disabled');
-    const formElements = arrElement.querySelectorAll('fieldset, select')
+const removeDisabled = (disabledElements) => {
+  disabledElements.forEach((disabledElement) => {
+    disabledElement.classList.remove('ad-form--disabled');
+    const formElements = disabledElement.querySelectorAll('fieldset, select')
     formElements.forEach((element) => {
       element.disabled = false;
     });
@@ -15,8 +15,8 @@ const readOnlyStage = (element) => {
 };
 
 // Функция активного режима
-const activeStateForm = (arr, readOnlyElement) => {
-  removeDisabled(arr);
+const activeStateForm = (disabledElements, readOnlyElement) => {
+  removeDisabled(disabledElements);
   readOnlyStage(readOnlyElement);
 };
 

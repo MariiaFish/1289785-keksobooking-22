@@ -27,11 +27,12 @@ const SIMILAR_ADS_COUNT = 10;
 
 //Функция для avatara
 const getAvatar = (min, max) => {
-  return 'img/avatars/user0' + getRandomInt(min, max) + '.png';
+  return `img/avatars/user0${getRandomInt(min, max)}.png`;
 };
 
 // Создаем объект
 const createAd = () => {
+
   return {
     author: {
       avatar: getAvatar(MIN_USER_AVATAR, MAX_USER_AVATAR),

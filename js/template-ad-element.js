@@ -1,10 +1,48 @@
-import {getMapType, createMap} from './map-class.js';
+// import {getMapType, createMap} from './map-class.js';
 
 const IMG_HEIGHT = 40;
 const IMG_WIDTH = 45;
 const IMG_ALT = 'Фотография жилья';
+const TRIGGER_VALUE_FIRST = 1;
+const TRIGGER_VALUE_SECOND = 4;
+const MAP_FLAT_TYPE = {flat: 'Квартира', bungalow: 'Бунгало', house: 'Дом', palace: 'Дворец'};
 const similarAddTemplate = document.querySelector('#card').content.querySelector('.popup');
 const addsFragment = document.createDocumentFragment();
+
+// Функция для получения занчения мар
+const getMapType = (map, key) => {
+  return map[key];
+};
+
+// Функция для строки заезд + выезд
+const printCheckinCheckout = (checkin, checkout) => {
+  let result = `Заезд после ${checkin}, выезд до ${checkout}`
+  if (checkin === undefined || checkout === undefined) {
+    return result = undefined;
+  }
+  return result;
+};
+
+// Функция для выведения строки гости + комнаты
+const printRoomsGuests = (rooms, guests) => {
+  let printRooms = 'комната для';
+  let printGuests = 'гостя';
+  let result = `${rooms} ${printRooms} ${guests} ${printGuests}`
+
+  if (rooms > TRIGGER_VALUE_FIRST && rooms <= TRIGGER_VALUE_SECOND) {
+    printRooms = 'комнаты для';
+  }
+  if (rooms > TRIGGER_VALUE_SECOND) {
+    printRooms = 'комнат для';
+  }
+  if (guests > TRIGGER_VALUE_FIRST) {
+    printGuests = 'гостей';
+  }
+  if (rooms === undefined || guests === undefined) {
+    return result = undefined;
+  }
+  return result;
+};
 
 // Функция для отчиски коллекции
 const clearHTMLCollection = (element) => {
@@ -43,8 +81,7 @@ const createFeatures = (docElement, features) => {
 };
 
 // Функция для заполнения эдемента с дочерними элементами
-const fillComplexElement = (environment, classElement, fn, map) => {
-  const keyValue = getMapType(map, classElement);
+const fillComplexElement = (environment, classElement, fn, keyValue) => {
   const popupElement = environment.querySelector(classElement);
   if (keyValue === undefined) {
     popupElement.hidden = true;
@@ -52,8 +89,7 @@ const fillComplexElement = (environment, classElement, fn, map) => {
   return fn(popupElement, keyValue);
 };
 
-const fillElement = (templateElement, classElement, map) => {
-  const keyValue = getMapType(map, classElement);
+const fillElement = (templateElement, classElement, keyValue) => {
   templateElement.querySelector(classElement).textContent = keyValue;
 
   if (classElement === '.popup__avatar') {
@@ -65,19 +101,19 @@ const fillElement = (templateElement, classElement, map) => {
   }
 };
 
-const createTemplateElement = (object) => {
-  const MAP_CLASS = createMap(object);
+const createTemplateElement = (objectElement) => {
+  const {offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}, author: {avatar}} = objectElement;
   const newAdElement = similarAddTemplate.cloneNode(true);
-  fillElement(newAdElement, '.popup__title', MAP_CLASS);
-  fillElement(newAdElement, '.popup__text--address', MAP_CLASS);
-  fillElement(newAdElement, '.popup__text--price', MAP_CLASS);
-  fillElement(newAdElement, '.popup__type', MAP_CLASS);
-  fillElement(newAdElement, '.popup__text--capacity', MAP_CLASS);
-  fillElement(newAdElement, '.popup__text--time', MAP_CLASS);
-  fillComplexElement(newAdElement, '.popup__features', createFeatures, MAP_CLASS);
-  fillElement(newAdElement, '.popup__description', MAP_CLASS);
-  fillComplexElement(newAdElement, '.popup__photos', createPhotos, MAP_CLASS);
-  fillElement(newAdElement, '.popup__avatar', MAP_CLASS);
+  fillElement(newAdElement, '.popup__title', title);
+  fillElement(newAdElement, '.popup__text--address', address);
+  fillElement(newAdElement, '.popup__text--price', `${price} ₽/ночь`);
+  fillElement(newAdElement, '.popup__type', getMapType(MAP_FLAT_TYPE, type));
+  fillElement(newAdElement, '.popup__text--capacity', printRoomsGuests(rooms, guests));
+  fillElement(newAdElement, '.popup__text--time', printCheckinCheckout(checkin, checkout));
+  fillComplexElement(newAdElement, '.popup__features', createFeatures, features);
+  fillElement(newAdElement, '.popup__description', description);
+  fillComplexElement(newAdElement, '.popup__photos', createPhotos, photos);
+  fillElement(newAdElement, '.popup__avatar', avatar);
   addsFragment.appendChild(newAdElement);
   return newAdElement;
 };

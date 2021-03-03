@@ -13,6 +13,7 @@ const mainMarker = L.icon({
   iconAnhor: [20, 36],
 });
 
+
 const mainPinMarker = L.marker(
   {
     lat: 35.68950,
@@ -33,8 +34,8 @@ const getMarkerAdres = (marker, element) => {
 };
 
 // Функция для добавления меток из массива на карту
-const pinAllMarks = (advertisements, map) => {
-  advertisements.forEach((ad) => {
+const pinAllMarks = (arr, map) => {
+  arr.forEach((ad) => {
     const {location: {x, y}} = ad;
     const marker = L.marker({
       lat: x,
@@ -48,5 +49,6 @@ const pinAllMarks = (advertisements, map) => {
       .bindPopup(createTemplateElement(ad));
   });
 };
+
 
 export {mainPinMarker, pinAllMarks, getMarkerAdres};
