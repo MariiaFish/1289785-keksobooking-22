@@ -34,12 +34,12 @@ const getMarkerAdres = (marker, element, decimalPlaces) => {
 };
 
 // Функция для добавления меток из массива на карту
-const pinAllMarks = (arr, map) => {
-  arr.forEach((ad) => {
-    const {location: {x, y}} = ad;
+const pinAllMarks = (ads, map) => {
+  ads.forEach((ad) => {
+    const {location: {lat, lng}} = ad;
     const marker = L.marker({
-      lat: x,
-      lng: y,
+      lat: lat,
+      lng: lng,
     },
     {
       icon: primeMarker,
@@ -50,5 +50,6 @@ const pinAllMarks = (arr, map) => {
   });
 };
 
+// pinAllMarks принимает параметр ads - массив с объявлениями,
 
 export {mainPinMarker, pinAllMarks, getMarkerAdres};

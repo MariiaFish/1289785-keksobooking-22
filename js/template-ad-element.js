@@ -5,6 +5,8 @@ const IMG_WIDTH = 45;
 const IMG_ALT = 'Фотография жилья';
 const TRIGGER_VALUE_FIRST = 1;
 const TRIGGER_VALUE_SECOND = 4;
+const MIN_DECIMAL_VALUE = 10;
+const MAX_DECIMAL_VALUE = 20;
 const MAP_FLAT_TYPE = {flat: 'Квартира', bungalow: 'Бунгало', house: 'Дом', palace: 'Дворец'};
 const similarAddTemplate = document.querySelector('#card').content.querySelector('.popup');
 const addsFragment = document.createDocumentFragment();
@@ -23,24 +25,44 @@ const printCheckinCheckout = (checkin, checkout) => {
   return result;
 };
 
+// Функция для возвращения остатка
+const valueReminder = (value, decimalValue) => {
+  const reminder = value % decimalValue;
+  return reminder;
+};
+
 // Функция для выведения строки гости + комнаты
 const printRoomsGuests = (rooms, guests) => {
+  const reminderRooms = valueReminder(rooms, MIN_DECIMAL_VALUE);
+  const reminderGuests = valueReminder(guests, MIN_DECIMAL_VALUE);
   let printRooms = 'комната для';
   let printGuests = 'гостя';
-  let result = `${rooms} ${printRooms} ${guests} ${printGuests}`
-
   if (rooms > TRIGGER_VALUE_FIRST && rooms <= TRIGGER_VALUE_SECOND) {
     printRooms = 'комнаты для';
-  }
-  if (rooms > TRIGGER_VALUE_SECOND) {
+  } else if (rooms > TRIGGER_VALUE_SECOND) {
     printRooms = 'комнат для';
+  }
+  if (rooms > MAX_DECIMAL_VALUE) {
+    printRooms = 'комната для';
+    if (reminderRooms > TRIGGER_VALUE_FIRST && reminderRooms <= TRIGGER_VALUE_SECOND) {
+      printRooms = 'комнаты для';
+    } else if (reminderRooms > TRIGGER_VALUE_SECOND) {
+      printRooms = 'комнат для';
+    }
   }
   if (guests > TRIGGER_VALUE_FIRST) {
     printGuests = 'гостей';
   }
+  if (guests > MAX_DECIMAL_VALUE){
+    printGuests = 'гостей';
+    if (reminderGuests === TRIGGER_VALUE_FIRST) {
+      printGuests = 'гостя';
+    }
+  }
   if (rooms === undefined || guests === undefined) {
     return result = undefined;
   }
+  let result = `${rooms} ${printRooms} ${guests} ${printGuests}`;
   return result;
 };
 
@@ -119,3 +141,4 @@ const createTemplateElement = (objectElement) => {
 };
 
 export {createTemplateElement};
+// todo: функция printCheckinCheckout громоздкая, думаю доработать её через switch
