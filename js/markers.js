@@ -13,6 +13,7 @@ const mainMarker = L.icon({
   iconAnhor: [20, 36],
 });
 
+
 const mainPinMarker = L.marker(
   {
     lat: 35.68950,
@@ -25,20 +26,20 @@ const mainPinMarker = L.marker(
 );
 
 //Функция для передачи адреса метки в поле ввода
-const getMarkerAdres = (marker, element) => {
+const getMarkerAdres = (marker, element, decimalPlaces) => {
   marker.on('moveend', (evt) => {
     const coordinates = evt.target.getLatLng();
-    element.value = `${coordinates.lat.toFixed(5)} ${coordinates.lng.toFixed(5)}`;
+    element.value = `${coordinates.lat.toFixed(decimalPlaces)} ${coordinates.lng.toFixed(decimalPlaces)}`;
   });
 };
 
 // Функция для добавления меток из массива на карту
-const pinAllMarks = (advertisements, map) => {
-  advertisements.forEach((ad) => {
-    const {location: {x, y}} = ad;
+const pinAllMarks = (ads, map) => {
+  ads.forEach((ad) => {
+    const {location: {lat, lng}} = ad;
     const marker = L.marker({
-      lat: x,
-      lng: y,
+      lat: lat,
+      lng: lng,
     },
     {
       icon: primeMarker,
@@ -48,5 +49,7 @@ const pinAllMarks = (advertisements, map) => {
       .bindPopup(createTemplateElement(ad));
   });
 };
+
+// pinAllMarks принимает параметр ads - массив с объявлениями,
 
 export {mainPinMarker, pinAllMarks, getMarkerAdres};
