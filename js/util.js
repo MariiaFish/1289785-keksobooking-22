@@ -64,4 +64,10 @@ const initialStateForm = (form) => {
   form.reset();
 };
 
-export {getRandomInt, getRandomСoordinate, getRandomArr, getArrElement, showAlert, closeModalOnClick, initialStateForm};
+
+// Функция для поиска элемента в массиве
+const findElementFromArray = (array, element) => {
+  return array.find(item => item === element);
+};
+
+export {getRandomInt, getRandomСoordinate, getRandomArr, getArrElement, showAlert, closeModalOnClick, initialStateForm, findElementFromArray};
