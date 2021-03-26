@@ -1,3 +1,5 @@
+import {setForm} from './form-mode.js';
+
 // Функция для отмены режимов "неактивно";
 const removeDisabled = (disabledElements) => {
   disabledElements.forEach((disabledElement) => {
@@ -18,6 +20,7 @@ const readOnlyStage = (element) => {
 const activeStateForm = (disabledElements, readOnlyElement) => {
   removeDisabled(disabledElements);
   readOnlyStage(readOnlyElement);
+  setForm();
 };
 
 export {activeStateForm};

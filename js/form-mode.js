@@ -10,6 +10,46 @@ const successMessageTemplate = document.querySelector('#success').content.queryS
 const main = document.querySelector('main');
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+
+const typeAd = adForm.querySelector('#type');
+const price = adForm.querySelector('#price');
+
+const minPrice = {
+  palace: 10000,
+  flat: 1000,
+  house: 5000,
+  bungalow: 0,
+}
+
+const timeInTimeOutMap = {
+  '12:00': '12:00',
+  '13:00': '13:00',
+  '14:00': '14:00',
+}
+
+//Функция устанавливающаю поле "цена" в зависимость от поля "тип жилья"
+const setDependValueAndMinAtr = (firstInput, secondInput, map) => {
+  firstInput.addEventListener('change', (evt) => {
+    secondInput.min = map[evt.target.value];
+    secondInput.placeholder = map[evt.target.value];
+  });
+};
+
+//Функция настройки зависимости значения одного поля ввода от значения другого поля ввода
+const setDependValue = (firstInput, secondInput, map) => {
+  firstInput.addEventListener('change', (evt) => {
+    secondInput.value = map[evt.target.value];
+  });
+};
+
+const setForm = () => {
+  setDependValue(timeIn, timeOut, timeInTimeOutMap);
+  setDependValue(timeOut, timeIn, timeInTimeOutMap);
+  setDependValueAndMinAtr(typeAd, price, minPrice);
+};
+
 // Функция неактивного режима формы
 const adDisabled = (disabledElements) => {
   disabledElements.forEach((arrElement) => {
@@ -54,4 +94,4 @@ const onSuccessSendData = () => {
   showSuccessMessage();
 };
 
-export {adForm, clearButton, DISABLED_ELEMENTS, adDisabled, adresForm, onSuccessSendData, initialStateForm, showErrorMessage};
+export {adForm, clearButton, DISABLED_ELEMENTS, adDisabled, adresForm, onSuccessSendData, initialStateForm, showErrorMessage, setForm};
