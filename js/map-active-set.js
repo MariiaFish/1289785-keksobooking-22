@@ -1,15 +1,16 @@
 /* global L:readonly */
 import  {activeStateForm} from './active-state-form.js';
 import {DISABLED_ELEMENTS, adresForm} from './form-mode.js';
-// import {SIMILAR_ADS_COUNT, createAd} from './ad-object.js';
 import {tileLayer} from './map-layer.js';
-import {pinAllMarks, getMarkerAdres, mainPinMarker} from './markers.js';
+import {createGroupMarks, getMarkerAdres, mainPinMarker, removeMarker, pinGroupToMap} from './markers.js';
 import {getServerData} from './api-data.js';
+import {getFilteredData, getFiltersValues} from './filter-of-ads.js';
 
 
 const MAP_ADDITIONS = [tileLayer, mainPinMarker];
 // const adsArr = new Array(SIMILAR_ADS_COUNT).fill(null).map(() => createAd());
 const DECIMAL_PLACES = 5;
+const filters = document.querySelector('.map__filters');
 
 // Функция добавления объектов к карте
 const addToMap = (arrAdditions, map) => {
@@ -30,9 +31,22 @@ const renderMapInActiveState = () => {
   addToMap(MAP_ADDITIONS, map);
   getMarkerAdres(mainPinMarker, adresForm, DECIMAL_PLACES);
   getServerData((ads) => {
-    pinAllMarks(ads, map);
-  });
+    let newGroupOfMarkers = createGroupMarks(ads);
+    pinGroupToMap(newGroupOfMarkers, map);
+    let filtersValues = {
+      'housing-type': 'any',
+      'housing-price': 'any',
+      'housing-rooms': 'any',
+      'housing-guests': 'any',
+    }
 
+    filters.addEventListener('change', (evt) => {
+      removeMarker(map, newGroupOfMarkers);
+      filtersValues = getFiltersValues(evt, filtersValues);
+      newGroupOfMarkers =createGroupMarks(getFilteredData(ads, filtersValues));
+      pinGroupToMap(newGroupOfMarkers, map);
+    });
+  });
 };
 
 export {renderMapInActiveState};

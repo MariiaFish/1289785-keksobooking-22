@@ -33,8 +33,11 @@ const getMarkerAdres = (marker, element, decimalPlaces) => {
   });
 };
 
+
+
 // Функция для добавления меток из массива на карту
-const pinAllMarks = (ads, map) => {
+const createGroupMarks = (ads) => {
+  const adsGroup = L.layerGroup();
   ads.forEach((ad) => {
     const {location: {lat, lng}} = ad;
     const marker = L.marker({
@@ -45,11 +48,17 @@ const pinAllMarks = (ads, map) => {
       icon: primeMarker,
     },
     );
-    marker.addTo(map)
+    marker.addTo(adsGroup)
       .bindPopup(createTemplateElement(ad));
   });
+  return adsGroup;
 };
 
-// pinAllMarks принимает параметр ads - массив с объявлениями,
+const pinGroupToMap = (group, map) => {
+  group.addTo(map);
+}
 
-export {mainPinMarker, pinAllMarks, getMarkerAdres};
+const removeMarker = (map, group) => {
+  group.remove(map);
+}
+export {mainPinMarker, createGroupMarks, getMarkerAdres, removeMarker, pinGroupToMap};
