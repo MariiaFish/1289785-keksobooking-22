@@ -1,5 +1,3 @@
-// import {getMapType, createMap} from './map-class.js';
-
 const IMG_HEIGHT = 40;
 const IMG_WIDTH = 45;
 const IMG_ALT = 'Фотография жилья';
@@ -141,4 +139,3 @@ const createTemplateElement = (objectElement) => {
 };
 
 export {createTemplateElement};
-// todo: функция printCheckinCheckout громоздкая, думаю доработать её через switch

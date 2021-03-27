@@ -1,6 +1,4 @@
-// import {getServerData} from './api-data.js';
 import {findElementFromArray} from './util.js'
-
 
 // Функция которая возвращает объект-актуальных значений фильтров
 const getFiltersValues = (evt, startMap) => {
@@ -48,7 +46,6 @@ const filteredFeature = (adValue, element) => {
   }
 };
 
-
 // Функция которая фильтрует массив данных с сервера
 const getFilteredData = (ads, filterValue) => {
   let filteredAds = ads.filter((ad) => {
@@ -66,21 +63,5 @@ const getFilteredData = (ads, filterValue) => {
   });
   return filteredAds;
 };
-
-// const setFiltersAds = () => {
-// getServerData((ads) => {
-//   let filtersValues = {
-//     'housing-type': 'any',
-//     'housing-price': 'any',
-//     'housing-rooms': 'any',
-//     'housing-guests': 'any',
-//   }
-
-//   filters.addEventListener('change', (evt) => {
-//     filtersValues = getFiltersValues(evt, filtersValues);
-//     getFilteredData(ads, filtersValues);
-//   });
-// });
-// };
 
 export{getFiltersValues, getFilteredData}

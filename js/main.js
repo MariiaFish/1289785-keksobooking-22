@@ -2,7 +2,6 @@ import {adDisabled, DISABLED_ELEMENTS, clearButton, onSuccessSendData} from './f
 import  {renderMapInActiveState} from './map-active-set.js';
 import {setClearAdForm, setAdSubmit} from './api-data.js';
 
-
 adDisabled(DISABLED_ELEMENTS);
 renderMapInActiveState();
 
