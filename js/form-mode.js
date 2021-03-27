@@ -14,7 +14,7 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 
 const typeAd = adForm.querySelector('#type');
-const price = adForm.querySelector('#price');
+const priceAd = adForm.querySelector('#price');
 
 const minPrice = {
   palace: 10000,
@@ -23,7 +23,7 @@ const minPrice = {
   bungalow: 0,
 }
 
-const timeInTimeOutMap = {
+const timeInTimeOut = {
   '12:00': '12:00',
   '13:00': '13:00',
   '14:00': '14:00',
@@ -45,9 +45,9 @@ const setDependValue = (firstInput, secondInput, map) => {
 };
 
 const setForm = () => {
-  setDependValue(timeIn, timeOut, timeInTimeOutMap);
-  setDependValue(timeOut, timeIn, timeInTimeOutMap);
-  setDependValueAndMinAtr(typeAd, price, minPrice);
+  setDependValue(timeIn, timeOut, timeInTimeOut);
+  setDependValue(timeOut, timeIn, timeInTimeOut);
+  setDependValueAndMinAtr(typeAd, priceAd, minPrice);
 };
 
 // Функция неактивного режима формы
