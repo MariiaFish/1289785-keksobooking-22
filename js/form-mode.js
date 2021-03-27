@@ -8,6 +8,7 @@ const adresForm = adForm.querySelector('#address');
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 const main = document.querySelector('main');
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+const mapFilters = document.querySelector('.map__filters');
 
 // Функция неактивного режима формы
 const adDisabled = (disabledElements) => {
@@ -50,6 +51,7 @@ const showSuccessMessage = () => {
 // Функция для обработки формы и вывода сообщения об успешной отправке
 const onSuccessSendData = () => {
   initialStateForm(adForm);
+  initialStateForm(mapFilters);
   showSuccessMessage();
 };
 

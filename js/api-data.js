@@ -52,4 +52,4 @@ const setClearAdForm = (button) => {
   });
 };
 
-export {getServerData, sendDataToServer, setAdSubmit, setClearAdForm};
+export {getServerData, setAdSubmit, setClearAdForm};

@@ -33,8 +33,6 @@ const getMarkerAdres = (marker, element, decimalPlaces) => {
   });
 };
 
-
-
 // Функция для добавления меток из массива на карту
 const createGroupMarks = (ads) => {
   const adsGroup = L.layerGroup();

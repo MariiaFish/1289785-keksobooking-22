@@ -10,6 +10,15 @@ const MAP_ADDITIONS = [tileLayer, mainPinMarker];
 const DECIMAL_PLACES = 5;
 const filters = document.querySelector('.map__filters');
 
+// const debounce = (fn, ms) => {
+//   let timeout;
+//   return function () {
+//     const fnCall = () => {fn.apply(this, arguments)};
+//     clearTimeout(timeout);
+//     timeout = setTimeout(fnCall, ms)
+//   };
+// };
+
 const renderMapInActiveState = () => {
   const map = L.map('map-canvas')
     .on('load', () => {
