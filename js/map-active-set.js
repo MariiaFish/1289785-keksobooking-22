@@ -8,10 +8,11 @@ import {getFilteredData, getFiltersValues} from './filter-of-ads.js';
 
 const MAP_ADDITIONS = [tileLayer, mainPinMarker];
 const DECIMAL_PLACES = 5;
+const MAX_MARKERS_VALUE = 10;
 const filters = document.querySelector('.map__filters');
 
-const renderMapInActiveState = () => {
-  const map = L.map('map-canvas')
+const createMap = () => {
+  const newMap = L.map('map-canvas')
     .on('load', () => {
       activeStateForm(DISABLED_ELEMENTS, adresForm);
     })
@@ -19,10 +20,15 @@ const renderMapInActiveState = () => {
       lat: 35.68950,
       lng: 139.69171,
     }, 10);
+  return newMap;
+};
+
+const renderMapInActiveState = () => {
+  const map = createMap();
   addToMap(MAP_ADDITIONS, map);
   getMarkerAdres(mainPinMarker, adresForm, DECIMAL_PLACES);
   getServerData((ads) => {
-    let newGroupOfMarkers = createGroupMarks(ads);
+    let newGroupOfMarkers = createGroupMarks(ads.slice(0, MAX_MARKERS_VALUE));
     pinGroupToMap(newGroupOfMarkers, map);
     let filtersValues = {
       'housing-type': 'any',
@@ -34,7 +40,7 @@ const renderMapInActiveState = () => {
     filters.addEventListener('change', (evt) => {
       removeMarker(map, newGroupOfMarkers);
       filtersValues = getFiltersValues(evt, filtersValues);
-      newGroupOfMarkers =createGroupMarks(getFilteredData(ads, filtersValues));
+      newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
       pinGroupToMap(newGroupOfMarkers, map);
     });
   });

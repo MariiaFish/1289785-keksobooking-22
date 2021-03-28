@@ -1,7 +1,9 @@
 import {closeModalOnClick, initialStateForm} from './util.js';
-import {adForm} from './setting-form.js'
+import {adForm} from './setting-form.js';
+import {sendDataToServer} from './api-data.js';
+import {backMarkerToOriginal, mainPinMarker} from './markers.js'
+// import {map} from './map-active-set.js'
 
-const clearButton = adForm.querySelector('.ad-form__reset');
 const mapFilter = document.querySelector('.map__filters');
 const DISABLED_ELEMENTS = [adForm, mapFilter];
 const adresForm = adForm.querySelector('#address');
@@ -52,7 +54,31 @@ const showSuccessMessage = () => {
 const onSuccessSendData = () => {
   initialStateForm(adForm);
   initialStateForm(mapFilters);
+  backMarkerToOriginal(mainPinMarker);
   showSuccessMessage();
 };
 
-export {adForm, clearButton, DISABLED_ELEMENTS, adDisabled, adresForm, onSuccessSendData, initialStateForm, showErrorMessage};
+// Функция для добавления обработчика отправки формы на кнопку
+const setAdSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendDataToServer(
+      () => onSuccess(),
+      () => showErrorMessage(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+// Функция для добавления обработчика отчиски формы на кнопку
+const setClearAdForm = (button) => {
+  button.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    initialStateForm(adForm);
+    initialStateForm(mapFilters);
+    backMarkerToOriginal(mainPinMarker);
+  });
+};
+
+export {adForm, DISABLED_ELEMENTS, adDisabled, adresForm, onSuccessSendData, initialStateForm, showErrorMessage, setAdSubmit, setClearAdForm};

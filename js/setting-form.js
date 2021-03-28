@@ -23,10 +23,6 @@ const timeInTimeOut = {
   '14:00': '14:00',
 }
 
-// Функция для добавления атрибута required
-const addRequiredAtr = (formElement) => {
-  formElement.required = true;
-};
 // Функция для добавления атрибута min
 const addMinLength = (formElement, length) => {
   formElement.minLength = length;
@@ -41,9 +37,7 @@ const addMax = (formElement, max) => {
 };
 
 const setDependsCapacityAndRooms = () => {
-
   if(roomsNumber.value == 1) {
-    capacity.options[2].selected = true;
     capacity.options[0].hidden = true;
     capacity.options[1].hidden = true;
     capacity.options[3].hidden = true;
@@ -81,7 +75,6 @@ const setDependsCapacityAndRooms = () => {
 };
 
 const setValidationOfTitle = () => {
-  addRequiredAtr(titleAd);
   addMinLength(titleAd, MIN_TITLE_LENGTH);
   addMaxLength(titleAd, MAX_TITLE_LENGTH);
 };
@@ -94,7 +87,6 @@ const setDependValue = (firstInput, secondInput, map) => {
 };
 
 const setValidationOfPrice = () => {
-  addRequiredAtr(priceAd);
   addMax(priceAd, MAX_PRICE);
 };
 
@@ -112,7 +104,6 @@ const settingsForm = () => {
   setDependValueAndMinAtr(typeAd, priceAd, minPrice);
   setValidationOfTitle();
   setValidationOfPrice();
-  setDependsCapacityAndRooms();
   setDependsCapacityAndRooms();
 };
 
