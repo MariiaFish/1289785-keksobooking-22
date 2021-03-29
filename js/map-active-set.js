@@ -39,25 +39,27 @@ const renderMapInActiveState = () => {
       'housing-guests': 'any',
     }
 
-    filters.addEventListener('change', (evt) => {
-      const debounceChangedMarkers = _.debounce(() => {
-        removeMarker(map, newGroupOfMarkers);
-        let newFiltersValues = getFiltersValues(evt, filtersValues);
-        newGroupOfMarkers = createGroupMarks(getFilteredData(ads, newFiltersValues));
-        pinGroupToMap(newGroupOfMarkers, map);
-      }
-      , DEBOUNCE_TIME);
-      debounceChangedMarkers();
+    const debounceChangedMarkers = _.debounce((evt) => {
+      removeMarker(map, newGroupOfMarkers);
+      let newFiltersValues = getFiltersValues(evt, filtersValues);
+      newGroupOfMarkers = createGroupMarks(getFilteredData(ads, newFiltersValues));
+      pinGroupToMap(newGroupOfMarkers, map);
+    }
+    , DEBOUNCE_TIME);
 
+
+    const debounceReset = _.debounce(() => {
+      removeMarker(map, newGroupOfMarkers);
+      newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
+      pinGroupToMap(newGroupOfMarkers, map);
+    },
+    DEBOUNCE_TIME);
+
+    filters.addEventListener('change', (evt) => {
+      debounceChangedMarkers(evt);
     });
 
     filters.addEventListener('reset', () => {
-      const debounceReset = _.debounce(() => {
-        removeMarker(map, newGroupOfMarkers);
-        newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
-        pinGroupToMap(newGroupOfMarkers, map);
-      },
-      DEBOUNCE_TIME);
       debounceReset();
     });
 
