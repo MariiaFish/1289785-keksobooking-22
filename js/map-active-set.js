@@ -3,7 +3,7 @@
 import  {activeStateForm} from './active-state-form.js';
 import {DISABLED_ELEMENTS, adresForm} from './form-mode.js';
 import {tileLayer, addToMap} from './map-layer.js';
-import {createGroupMarks, getMarkerAdres, mainPinMarker, removeMarker, pinGroupToMap} from './markers.js';
+import {createGroupMarks, getMarkerAdres, mainPinMarker, removeMarker, pinGroupToMap, tokyoCoordinates} from './markers.js';
 import {getServerData} from './api-data.js';
 import {getFilteredData, getFiltersValues} from './filter-of-ads.js';
 
@@ -11,6 +11,7 @@ const MAP_ADDITIONS = [tileLayer, mainPinMarker];
 const DECIMAL_PLACES = 5;
 const MAX_MARKERS_VALUE = 10;
 const DEBOUNCE_TIME = 500;
+const ZOOM_MAP = 10;
 const filters = document.querySelector('.map__filters');
 
 const createMap = () => {
@@ -19,9 +20,9 @@ const createMap = () => {
       activeStateForm(DISABLED_ELEMENTS, adresForm);
     })
     .setView({
-      lat: 35.68950,
-      lng: 139.69171,
-    }, 10);
+      lat: tokyoCoordinates.lat,
+      lng: tokyoCoordinates.lng,
+    }, ZOOM_MAP);
   return newMap;
 };
 
@@ -41,12 +42,11 @@ const renderMapInActiveState = () => {
 
     const debounceChangedMarkers = _.debounce((evt) => {
       removeMarker(map, newGroupOfMarkers);
-      let newFiltersValues = getFiltersValues(evt, filtersValues);
+      const newFiltersValues = getFiltersValues(evt, filtersValues);
       newGroupOfMarkers = createGroupMarks(getFilteredData(ads, newFiltersValues));
       pinGroupToMap(newGroupOfMarkers, map);
     }
     , DEBOUNCE_TIME);
-
 
     const debounceReset = _.debounce(() => {
       removeMarker(map, newGroupOfMarkers);

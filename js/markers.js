@@ -1,7 +1,7 @@
 /* global L:readonly */
 import {createTemplateElement} from './template-ad-element.js';
 
-const MAINMARKERCOORDIATES = {
+const tokyoCoordinates = {
   lat: 35.68950,
   lng: 139.69171,
 }
@@ -20,8 +20,8 @@ const mainMarker = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: MAINMARKERCOORDIATES.lat,
-    lng: MAINMARKERCOORDIATES.lng,
+    lat: tokyoCoordinates.lat,
+    lng: tokyoCoordinates.lng,
   },
   {
     draggable: true,
@@ -30,10 +30,10 @@ const mainPinMarker = L.marker(
 );
 
 // Функция для возвращения главной метки на исходное место
-const backMarkerToOriginal = (marker) => {
+const returnMarkerToOriginal = (marker) => {
   marker.setLatLng({
-    lat: MAINMARKERCOORDIATES.lat,
-    lng: MAINMARKERCOORDIATES.lng,
+    lat: tokyoCoordinates.lat,
+    lng: tokyoCoordinates.lng,
   });
 };
 
@@ -71,4 +71,4 @@ const pinGroupToMap = (group, map) => {
 const removeMarker = (map, group) => {
   group.remove(map);
 }
-export {mainPinMarker, createGroupMarks, getMarkerAdres, removeMarker, pinGroupToMap, backMarkerToOriginal};
+export {mainPinMarker, createGroupMarks, getMarkerAdres, removeMarker, pinGroupToMap, returnMarkerToOriginal, tokyoCoordinates};

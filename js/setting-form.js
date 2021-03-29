@@ -1,15 +1,6 @@
-const adForm = document.querySelector('.ad-form');
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
-const typeAd = adForm.querySelector('#type');
-const priceAd = adForm.querySelector('#price');
-const titleAd = adForm.querySelector('#title');
-const roomsNumber = adForm.querySelector('#room_number');
-const capacity = adForm.querySelector('#capacity');
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 1000000;
-
 const minPrice = {
   palace: 10000,
   flat: 1000,
@@ -22,6 +13,15 @@ const timeInTimeOut = {
   '13:00': '13:00',
   '14:00': '14:00',
 }
+
+const adForm = document.querySelector('.ad-form');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+const typeAd = adForm.querySelector('#type');
+const priceAd = adForm.querySelector('#price');
+const titleAd = adForm.querySelector('#title');
+const roomsNumber = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
 
 // Функция для добавления атрибута min
 const addMinLength = (formElement, length) => {
@@ -98,7 +98,7 @@ const setDependValueAndMinAtr = (firstInput, secondInput, map) => {
   });
 };
 
-const settingsForm = () => {
+const formSetting = () => {
   setDependValue(timeIn, timeOut, timeInTimeOut);
   setDependValue(timeOut, timeIn, timeInTimeOut);
   setDependValueAndMinAtr(typeAd, priceAd, minPrice);
@@ -107,4 +107,4 @@ const settingsForm = () => {
   setDependsCapacityAndRooms();
 };
 
-export {settingsForm, adForm};
+export {formSetting, adForm};

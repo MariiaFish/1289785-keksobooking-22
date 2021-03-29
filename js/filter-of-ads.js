@@ -15,6 +15,14 @@ const getFiltersValues = (evt, startMap) => {
   return map;
 };
 
+// Проверка на значение 'any' для type
+const isAnyType = (filterValue, objectValue) => {
+  if (objectValue === 'any') {
+    return true;
+  }
+  return filterValue === objectValue;
+};
+
 // Проверка на значение 'any'
 const isAny = (filterValue, objectValue) => {
   if (objectValue === 'any') {
@@ -47,19 +55,19 @@ const filteredFeature = (adValue, element) => {
 };
 
 // Функция которая фильтрует массив данных с сервера
-const getFilteredData = (ads, filterValue) => {
+const getFilteredData = (ads, filterValues) => {
   let filteredAds = ads.filter((ad) => {
     const {offer: {type, price, rooms, guests, features}} = ad;
-    return isAny(type, filterValue['housing-type'])
-    && isAny(rooms, filterValue['housing-rooms'])
-    && isAny(guests, filterValue['housing-guests'])
-    && priceFilter(price, filterValue['housing-price'])
-    && filteredFeature(features, filterValue['filter-wifi'])
-    && filteredFeature(features, filterValue['filter-dishwasher'])
-    && filteredFeature(features, filterValue['filter-parking'])
-    && filteredFeature(features, filterValue['filter-washer'])
-    && filteredFeature(features, filterValue['filter-elevator'])
-    && filteredFeature(features, filterValue['filter-conditioner']);
+    return isAnyType(type, filterValues['housing-type'])
+    && isAny(rooms, filterValues['housing-rooms'])
+    && isAny(guests, filterValues['housing-guests'])
+    && priceFilter(price, filterValues['housing-price'])
+    && filteredFeature(features, filterValues['filter-wifi'])
+    && filteredFeature(features, filterValues['filter-dishwasher'])
+    && filteredFeature(features, filterValues['filter-parking'])
+    && filteredFeature(features, filterValues['filter-washer'])
+    && filteredFeature(features, filterValues['filter-elevator'])
+    && filteredFeature(features, filterValues['filter-conditioner']);
   });
   return filteredAds;
 };

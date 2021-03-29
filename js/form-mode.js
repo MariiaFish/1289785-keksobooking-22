@@ -1,8 +1,7 @@
 import {closeModalOnClick, initialStateForm} from './util.js';
 import {adForm} from './setting-form.js';
 import {sendDataToServer} from './api-data.js';
-import {backMarkerToOriginal, mainPinMarker} from './markers.js'
-// import {map} from './map-active-set.js'
+import {returnMarkerToOriginal, mainPinMarker} from './markers.js'
 
 const mapFilter = document.querySelector('.map__filters');
 const DISABLED_ELEMENTS = [adForm, mapFilter];
@@ -54,7 +53,7 @@ const showSuccessMessage = () => {
 const onSuccessSendData = () => {
   initialStateForm(adForm);
   initialStateForm(mapFilters);
-  backMarkerToOriginal(mainPinMarker);
+  returnMarkerToOriginal(mainPinMarker);
   showSuccessMessage();
 };
 
@@ -77,7 +76,7 @@ const setClearAdForm = (button) => {
     evt.preventDefault();
     initialStateForm(adForm);
     initialStateForm(mapFilters);
-    backMarkerToOriginal(mainPinMarker);
+    returnMarkerToOriginal(mainPinMarker);
   });
 };
 
