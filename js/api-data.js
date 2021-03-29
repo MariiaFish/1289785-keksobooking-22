@@ -1,5 +1,4 @@
-import {adForm, showErrorMessage} from './form-mode.js';
-import {showAlert, initialStateForm} from './util.js';
+import {showAlert} from './util.js';
 
 // Функция для получения данных с сервера
 const getServerData = (onSuccess) => {
@@ -31,25 +30,4 @@ const sendDataToServer = (onSuccess, onFail, body) => {
     });
 };
 
-// Функция для добавления обработчика отправки формы на кнопку
-const setAdSubmit = (onSuccess) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    sendDataToServer(
-      () => onSuccess(),
-      () => showErrorMessage(),
-      new FormData(evt.target),
-    );
-  });
-};
-
-// Функция для добавления обработчика отчиски формы на кнопку
-const setClearAdForm = (button) => {
-  button.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    initialStateForm(adForm);
-  });
-};
-
-export {getServerData, sendDataToServer, setAdSubmit, setClearAdForm};
+export {getServerData, sendDataToServer};

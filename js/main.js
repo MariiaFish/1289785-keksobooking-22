@@ -1,6 +1,8 @@
-import {adDisabled, DISABLED_ELEMENTS, clearButton, onSuccessSendData} from './form-mode.js';
+import {adDisabled, DISABLED_ELEMENTS, onSuccessSendData, setClearAdForm, setAdSubmit} from './form-mode.js';
 import  {renderMapInActiveState} from './map-active-set.js';
-import {setClearAdForm, setAdSubmit} from './api-data.js';
+import {adForm} from './setting-form.js'
+
+const clearButton = adForm.querySelector('.ad-form__reset');
 
 adDisabled(DISABLED_ELEMENTS);
 renderMapInActiveState();
