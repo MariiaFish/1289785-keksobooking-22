@@ -26,7 +26,7 @@ const adDisabled = (disabledElements) => {
 // Закрытие окна по нажатию на клавишу ESC
 const closeModalOnEsc = (closedElement) => {
   window.addEventListener('keydown', (evt) => {
-    if (evt.key == 'Escape') {
+    if (evt.key === 'Escape') {
       closedElement.classList.add('hidden');
     }
   });

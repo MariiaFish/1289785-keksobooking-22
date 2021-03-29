@@ -37,19 +37,19 @@ const addMax = (formElement, max) => {
 };
 
 const setDependsCapacityAndRooms = () => {
-  if(roomsNumber.value == 1) {
+  if(roomsNumber.value === 1) {
     capacity.options[0].hidden = true;
     capacity.options[1].hidden = true;
     capacity.options[3].hidden = true;
   }
   roomsNumber.addEventListener('change', (evt) => {
-    if(evt.target.value == 1) {
+    if(evt.target.value === '1') {
       capacity.options[2].selected = true;
       capacity.options[0].hidden = true;
       capacity.options[1].hidden = true;
       capacity.options[3].hidden = true;
     }
-    if (evt.target.value == 2) {
+    if (evt.target.value === '2') {
       capacity.options[1].selected = true;
       capacity.options[1].hidden = false;
       capacity.options[2].hidden = false;
@@ -57,14 +57,14 @@ const setDependsCapacityAndRooms = () => {
       capacity.options[3].hidden = true;
 
     }
-    if (evt.target.value == 3) {
+    if (evt.target.value === '3') {
       capacity.options[0].selected = true;
       capacity.options[0].hidden = false;
       capacity.options[1].hidden = false;
       capacity.options[2].hidden = false;
       capacity.options[3].hidden = true;
     }
-    if (evt.target.value == 100) {
+    if (evt.target.value === '100') {
       capacity.options[3].selected = true;
       capacity.options[0].hidden = true;
       capacity.options[1].hidden = true;

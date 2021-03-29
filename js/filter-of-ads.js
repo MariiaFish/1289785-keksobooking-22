@@ -20,7 +20,7 @@ const isAny = (filterValue, objectValue) => {
   if (objectValue === 'any') {
     return true;
   }
-  return filterValue == objectValue;
+  return filterValue === Number(objectValue);
 };
 
 // Фильр для фильтрации заначения ключа price
