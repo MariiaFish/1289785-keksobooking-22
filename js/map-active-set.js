@@ -1,4 +1,5 @@
 /* global L:readonly */
+/* global _:readonly */
 import  {activeStateForm} from './active-state-form.js';
 import {DISABLED_ELEMENTS, adresForm} from './form-mode.js';
 import {tileLayer, addToMap} from './map-layer.js';
@@ -30,7 +31,7 @@ const renderMapInActiveState = () => {
   getServerData((ads) => {
     let newGroupOfMarkers = createGroupMarks(ads.slice(0, MAX_MARKERS_VALUE));
     pinGroupToMap(newGroupOfMarkers, map);
-    let filtersValues = {
+    const filtersValues = {
       'housing-type': 'any',
       'housing-price': 'any',
       'housing-rooms': 'any',
@@ -38,22 +39,25 @@ const renderMapInActiveState = () => {
     }
 
     filters.addEventListener('change', (evt) => {
-      removeMarker(map, newGroupOfMarkers);
-      filtersValues = getFiltersValues(evt, filtersValues);
-      newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
-      pinGroupToMap(newGroupOfMarkers, map);
+      const throttleChangedMarkers = _.debounce(() => {
+        removeMarker(map, newGroupOfMarkers);
+        let newFiltersValues = getFiltersValues(evt, filtersValues);
+        newGroupOfMarkers = createGroupMarks(getFilteredData(ads, newFiltersValues));
+        pinGroupToMap(newGroupOfMarkers, map);
+      }
+      , 500);
+      throttleChangedMarkers();
+
     });
 
     filters.addEventListener('reset', () => {
-      removeMarker(map, newGroupOfMarkers);
-      filtersValues = {
-        'housing-type': 'any',
-        'housing-price': 'any',
-        'housing-rooms': 'any',
-        'housing-guests': 'any',
-      }
-      newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
-      pinGroupToMap(newGroupOfMarkers, map);
+      const throttleReset = _.debounce(() => {
+        removeMarker(map, newGroupOfMarkers);
+        newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
+        pinGroupToMap(newGroupOfMarkers, map);
+      },
+      500);
+      throttleReset();
     });
 
   });
