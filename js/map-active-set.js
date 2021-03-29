@@ -43,6 +43,19 @@ const renderMapInActiveState = () => {
       newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
       pinGroupToMap(newGroupOfMarkers, map);
     });
+
+    filters.addEventListener('reset', () => {
+      removeMarker(map, newGroupOfMarkers);
+      filtersValues = {
+        'housing-type': 'any',
+        'housing-price': 'any',
+        'housing-rooms': 'any',
+        'housing-guests': 'any',
+      }
+      newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
+      pinGroupToMap(newGroupOfMarkers, map);
+    });
+
   });
 };
 
