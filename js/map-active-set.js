@@ -10,7 +10,7 @@ import {getFilteredData, getFiltersValues} from './filter-of-ads.js';
 const MAP_ADDITIONS = [tileLayer, mainPinMarker];
 const DECIMAL_PLACES = 5;
 const MAX_MARKERS_VALUE = 10;
-const THROTTLE_TIME = 500;
+const DEBOUNCE_TIME = 500;
 const filters = document.querySelector('.map__filters');
 
 const createMap = () => {
@@ -40,25 +40,25 @@ const renderMapInActiveState = () => {
     }
 
     filters.addEventListener('change', (evt) => {
-      const throttleChangedMarkers = _.debounce(() => {
+      const debounceChangedMarkers = _.debounce(() => {
         removeMarker(map, newGroupOfMarkers);
         let newFiltersValues = getFiltersValues(evt, filtersValues);
         newGroupOfMarkers = createGroupMarks(getFilteredData(ads, newFiltersValues));
         pinGroupToMap(newGroupOfMarkers, map);
       }
-      , THROTTLE_TIME);
-      throttleChangedMarkers();
+      , DEBOUNCE_TIME);
+      debounceChangedMarkers();
 
     });
 
     filters.addEventListener('reset', () => {
-      const throttleReset = _.debounce(() => {
+      const debounceReset = _.debounce(() => {
         removeMarker(map, newGroupOfMarkers);
         newGroupOfMarkers = createGroupMarks(getFilteredData(ads, filtersValues));
         pinGroupToMap(newGroupOfMarkers, map);
       },
-      THROTTLE_TIME);
-      throttleReset();
+      DEBOUNCE_TIME);
+      debounceReset();
     });
 
   });
